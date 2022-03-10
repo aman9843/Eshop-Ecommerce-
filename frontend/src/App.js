@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 import HomeScreen from './components/screens/HomeScreen';
 import ProductScreen from './components/screens/ProductScreen';
 import CartScreen from './components/screens/CartScreen';
+import LoginScreen from './components/screens/LoginScreen';
+import RegisterScreen from './components/screens/RegisterScreen';
 
 const App = () => {
   return (
@@ -19,6 +21,12 @@ const App = () => {
           <Switch>
             <Route exact path="/">
             <HomeScreen/> 
+            </Route>
+            <Route exact path="/login">
+              <LoginScreen />
+            </Route>
+            <Route exact path="/register">
+              <RegisterScreen />
             </Route>
             <Route exact path="/products/:id">
             <ProductScreen/>

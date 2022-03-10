@@ -8,8 +8,8 @@ import Message from "../Message";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const productReducer = useSelector((state) => state.productReducer);
-  const { loading, error, products } = productReducer;
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
  
 
   useEffect(() => {
