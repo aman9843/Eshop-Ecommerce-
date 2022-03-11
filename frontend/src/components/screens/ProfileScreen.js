@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   Row,
   Col,
@@ -9,12 +9,15 @@ import {
 } from "react-bootstrap";
 import Loader from "../Loader";
 import Message from "../Message";
-import { details } from "../../actions/userActions";
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { details,updateDetails } from "../../actions/userActions";
 
-const RegisterScreen = () => {
-  const location = useLocation();
+import { useDispatch, useSelector } from "react-redux";
+import { USER_UPDATE_RESET } from "../../constants/userConstants";
+
+// Profile Screen 
+
+const ProfileScreen = () => {
+ 
   const dispatch = useDispatch();
   const history = useHistory();
   const [name,setName] = useState('');
@@ -23,14 +26,21 @@ const RegisterScreen = () => {
   const [cpassword, setCpassword] = useState('');
   const [message, setMessage] = useState(null);
 
+  const userDetails = useSelector((state) => state.userDetails);
+  const {loading,error,user} = userDetails;
+  
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {success} = userUpdate;
+
  
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user  } = userDetails;
 
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  
 
  
 
@@ -41,28 +51,41 @@ const RegisterScreen = () => {
       history.push('/login')
     } else {
 
+      if(!userInfo || !userInfo.name) {
+        dispatch({type : USER_UPDATE_RESET})
+         dispatch(details('profile'))
+      } else {
+ 
+        setName(userInfo.name)
+        setEmail(userInfo.email)
+       
+        
+      }
+
         
 
     }
-  }, [history,userInfo]);
+  }, [dispatch,history,userInfo,user,success]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if(password !== cpassword) {
         setMessage("Password Do Not Match!")
     } else {
-        dispatch(register(name,email,password,cpassword))
+       dispatch(updateDetails({id : userInfo._id ,email,name,password,cpassword}))
     }
     
 }
 
 
 
-  return (
-    <FormContainer>
-      <h1>Register YourSelf</h1>
+  return (  
+    <Row>
+      <Col md={3}>
+      <h2>User Profile</h2>
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
+      {success && <Message variant='success'>Profile Updated</Message>}
       {loading && <Loader />}
       <Form onSubmit={onSubmitHandler}>
         <Form.Group controlId="name">
@@ -121,23 +144,16 @@ const RegisterScreen = () => {
         </Form.Group>
 
       <Button className="my-3" type="submit" variant="primary">
-       Register 
+       Update
       </Button>
       </Form>
+      </Col>
+      <Col md={9}>
+          <h2>My Orders</h2>
 
-
-      <Row className="py-3">
-        <Col>
-          Already Have An Account ?{" "}
-          <Link
-            to={redirect ? `/login?redirect=${redirect}` : '/login'}
-          >
-           Login
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+      </Col>
+    </Row>
   );
 };
 
-export default RegisterScreen;
+export default ProfileScreen;

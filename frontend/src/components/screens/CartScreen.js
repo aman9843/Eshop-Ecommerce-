@@ -20,8 +20,8 @@ const CartScreen = () => {
   const history = useHistory();
   const location = useLocation();
   const productId = params.id;
-  console.log(productId);
-
+  // location. search for storing quantity in qty
+  // substring to pass as an Integer 
   const qty = parseInt(
     location.search.substring(
       location.search.length - 1,
@@ -32,16 +32,16 @@ const CartScreen = () => {
   // location.search ? Number(location.search.split('=')[1]) : 1
 
   const dispatch = useDispatch();
-
+  // cart 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-
+  // useEffect to add product with the ID
   useEffect(() => {
     if (productId) {
       dispatch(addItem(productId, qty));
     }
   }, [dispatch, productId, qty]);
-
+  // use Effect to remove Item 
   const removeFromCart = (id) => {
     dispatch(rmvItem(id));
   };
@@ -91,36 +91,7 @@ const CartScreen = () => {
                           </option>
                         ))}
                       </Form.Control>
-                      {/* <input
-                        type="number"
-                        value={item.qty}
-                        onChange={(e) => {
-                          dispatch(
-                            addItem(item.product, Number(e.target.value))
-                          );
-                        }}
-                      > */}
-                        {/* {[...Array(item.countInStock).keys()].map((x) => (
-                          <option key={x + 1} value={x + 1}>
-                            {x + 1}
-                          </option>
-                        ))} */}
-                      {/* </input> */}
-                      {/* <Form.Select
-                        aria-label="Default select example"
-                        value={item.qty}
-                        onChange={(e) => {
-                          dispatch(
-                            addItem(item.product, Number(e.target.value))
-                          );
-                        }}
-                      >
-                        {[...Array(qty).keys()].map((x) => (
-                          <option key={x + 1} value={x + 1}>
-                            {x + 1}
-                          </option>
-                        ))}
-                      </Form.Select> */}
+                     
                    
                     </Col>
 

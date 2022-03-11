@@ -3,28 +3,33 @@ import thunk from 'redux-thunk'  //middleware
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { productDetailsReducers, productReducers } from './reducers/productReducers'
 import { cartReducers } from './reducers/cartReducers'
-import { userLoginReducers, userRegisterReducers, userDetailsReducers } from './reducers/userReducers'
-
+import { userLoginReducers, userRegisterReducers, userDetailsReducers, userUpdateReducers } from './reducers/userReducers'
+//Reducers
 const reducer = combineReducers({
     productList: productReducers,
     productsDetails:productDetailsReducers,
     cart:cartReducers,
     userLogin:userLoginReducers,
     userRegister:userRegisterReducers,
-    userDetails:userDetailsReducers
+    userDetails:userDetailsReducers,
+    userUpdate:userUpdateReducers,
+    
 })
-
+// Get Item
 const cartItemsFromStrorage = localStorage.getItem('cartItems')? JSON.parse(localStorage.getItem('cartItems')) : []
 const userInfoFromStrorage = localStorage.getItem('userInfo')? JSON.parse(localStorage.getItem('userInfo')) : null
-
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')? JSON.parse(localStorage.getItem('shippingAddress')) : {}
+// Initial State
 const initialState = {
-    cart:{cartItems:cartItemsFromStrorage},
-    userLogin:{userInfo:userInfoFromStrorage}
-}
+    cart:{cartItems:cartItemsFromStrorage,
+          shippingAddress:shippingAddressFromStorage},
+    userLogin:{userInfo:userInfoFromStrorage},
 
+}
+// middleware
 const middleware = [thunk]
 
-
+// store
 const store = createStore(
     reducer,
     initialState,
