@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
-import { Container } from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomeScreen from './components/screens/HomeScreen';
@@ -11,6 +11,9 @@ import RegisterScreen from './components/screens/RegisterScreen';
 import ProfileScreen from './components/screens/ProfileScreen';
 import ShippingScreen from './components/screens/ShippingScreen';
 import PaymentScreen from './components/screens/PaymentScreen';
+import PlaceOrder from './components/screens/PlaceOrder';
+import OrderScreen from './components/screens/OrderScreen';
+
 
 const App = () => {
   return (
@@ -39,6 +42,12 @@ const App = () => {
             </Route>
             <Route exact path="/payment">
               <PaymentScreen />
+            </Route>
+            <Route exact path="/placeorder">
+              <PlaceOrder />
+            </Route>
+            <Route exact path="/order/:id">
+              <OrderScreen />
             </Route>
             <Route exact path="/products/:id">
             <ProductScreen/>

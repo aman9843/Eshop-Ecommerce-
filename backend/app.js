@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const productRoutes = require('./routes/productsRoutes');
 const userRoutes = require('./routes/userRoutes')
+const orderRoutes = require('./routes/orderRoutes')
 const {notFound,errorHandler} = require('./middleware/errorMiddleware');
 
 
@@ -18,6 +19,11 @@ app.use(express.json())
 app.use(cors());
 app.use('/api/products',productRoutes);
 app.use('/api/users',userRoutes);
+app.use('/api/orders',orderRoutes);
+
+app.get('/api/config/paypal',(req,res)=> {
+  res.send(process.env.PAYPAL_CLIENT_ID)
+})
 
 
 
