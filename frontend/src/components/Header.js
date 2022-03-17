@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown, NavItem } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../actions/userActions";
@@ -47,6 +47,34 @@ const Header = () => {
                 <i className="fa-solid fa-user"></i>Sign In
               </Nav.Link>
                
+              )}
+
+              {userInfo && userInfo.isAdmin && (
+                 <NavDropdown title='Admin' id='adminmenu'>
+                   <NavItem>
+                   <Container as={Link} to="/admin/userlist">
+                   Users
+                 </Container>
+                 </NavItem>
+                 <NavItem>
+                   <Container as={Link} to="/admin/productlist">
+                   Products
+                 </Container>
+                 </NavItem>
+                 <NavItem>
+                   <Container as={Link} to="/admin/orderlist">
+                   Orders
+                 </Container>
+                 </NavItem>
+
+                  
+                 
+
+
+                 </NavDropdown>
+
+
+                 
               )}
             
             </Nav>

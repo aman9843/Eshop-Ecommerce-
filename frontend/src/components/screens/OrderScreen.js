@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../Loader";
 import Message from "../Message";
-import {PayPalButton} from 'react-paypal-button-v2'
+import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../../constants/orderConstants";
 
 import {
@@ -21,13 +21,7 @@ const OrderScreen = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const orderId = params.id;
-  const [sdk, setSdk] = useState("");
-  const successPaymentHandler =(paymentResult) => {
-    console.log(paymentResult)
-
-    dispatch(payOrder(orderId,paymentResult))
-
-  }
+  const [sdk, setSdk] = useState(false);
 
   const cart = useSelector((state) => state.cart);
   // const orderCreate = useSelector((state) => state.orderCreate);
@@ -62,20 +56,25 @@ const OrderScreen = () => {
         setSdk(true);
       };
 
-      document.body.  appendChild(script);
+      document.body.appendChild(script);
     };
-    if(!order || successPay ){
-    dispatch({type:ORDER_PAY_RESET})
-    dispatch(orderDetails(orderId));
-
+    if (!order || successPay) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch(orderDetails(orderId));
     } else if (!order.isPaid) {
-      if(!window.paypal) {
-        addPaypalScript()
+      if (!window.paypal) {
+        addPaypalScript();
       } else {
-        setSdk(true)
+        setSdk(true);
       }
     }
-  }, [dispatch, orderId,successPay,order]);
+  }, [dispatch, orderId, successPay, order]);
+
+  const successPaymentHandler = (paymentResult) => {
+    console.log(paymentResult);
+
+    dispatch(payOrder(orderId, paymentResult));
+  };
 
   return loading ? (
     <Loader />
@@ -163,7 +162,7 @@ const OrderScreen = () => {
               <ListGroupItem>
                 <h2>Order Summary</h2>
               </ListGroupItem>
-              <ListGroupItem>
+              {/* <ListGroupItem>
                 <Row>
                   <Col> Items </Col>
                   <Col>${order.itemsPrice}</Col>
@@ -180,7 +179,7 @@ const OrderScreen = () => {
                   <Col> Tax Price </Col>
                   <Col>${order.taxPrice}</Col>
                 </Row>
-              </ListGroupItem>
+              </ListGroupItem> */}
 
               <ListGroupItem>
                 <Row>
@@ -189,22 +188,17 @@ const OrderScreen = () => {
                 </Row>
               </ListGroupItem>
               {!order.isPaid && (
-              <ListGroupItem>
-                {loadingPay && <Loader/>}
-                {!sdk ? (
-                
-                <Loader/>
-                 ) : (
-                <PayPalButton
-                  amount={order.totalPrice} onSuccess={successPaymentHandler}
-                
-                />
-
-              )}
-              </ListGroupItem>
-              
-              
-              
+                <ListGroupItem>
+                  {loadingPay && <Loader />}
+                  {!sdk ? (
+                    <Loader />
+                  ) : (
+                    <PayPalButton
+                      amount={order.totalPrice}
+                      onSuccess={successPaymentHandler}
+                    />
+                  )}
+                </ListGroupItem>
               )}
             </ListGroup>
           </Card>

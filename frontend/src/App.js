@@ -13,6 +13,8 @@ import ShippingScreen from './components/screens/ShippingScreen';
 import PaymentScreen from './components/screens/PaymentScreen';
 import PlaceOrder from './components/screens/PlaceOrder';
 import OrderScreen from './components/screens/OrderScreen';
+import UserListScreen from './components/screens/UserListScreen';
+import UserEditScreen from './components/screens/UserEditScreen';
 
 
 const App = () => {
@@ -46,6 +48,13 @@ const App = () => {
             <Route exact path="/placeorder">
               <PlaceOrder />
             </Route>
+            <Route exact path="/admin/userlist">
+              <UserListScreen />
+            </Route>
+            <Route exact path="/admin/user/:id/edit">
+              <UserEditScreen />
+            </Route>
+            
             <Route exact path="/order/:id">
               <OrderScreen />
             </Route>
