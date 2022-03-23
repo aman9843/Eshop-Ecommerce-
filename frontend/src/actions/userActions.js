@@ -21,7 +21,10 @@ import {
   USER_LIST_RESET,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
-  USER_DELETE_FAIL
+  USER_DELETE_FAIL,
+  USER_ADMIN_UPDATE_REQUEST,
+  USER_ADMIN_UPDATE_SUCCESS,
+  USER_ADMIN_UPDATE_FAIL
 } from "../constants/userConstants";
 
 
@@ -124,6 +127,7 @@ export const details = (id) => async (dispatch, getState) => {
     console.log(config);
 
     const { data } = await axios.get(`/api/users/${id}`, config);
+    console.log(data)
       
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
@@ -231,6 +235,44 @@ export const userDelete = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
+
+// user authorization update by admin 
+
+export const userUpdateDetails = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_ADMIN_UPDATE_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${userInfo.token}`,
+      },
+    };
+
+   
+
+    const { data } = await axios.put(`/api/users/${user._id}`,user, config);
+    console.log(data)
+
+    dispatch({ type: USER_ADMIN_UPDATE_SUCCESS});
+    dispatch({ type: USER_DETAILS_SUCCESS, payload:data});
+
+  } catch (error) {
+    dispatch({
+      type: USER_ADMIN_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

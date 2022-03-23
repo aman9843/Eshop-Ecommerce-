@@ -12,6 +12,12 @@ import {
   MY_ORDERS_SUCCESS,
   MY_ORDERS_FAIL,
   MY_ORDERS_REQUEST,
+  ALLORDER_LIST_REQUEST,
+  ALLORDER_LIST_FAIL,
+  ALLORDER_LIST_SUCCESS,
+  ORDER_DELIVERED_REQUEST,
+  ORDER_DELIVERED_SUCCESS,
+  ORDER_DELIVERED_FAIL,
   
 } from "../constants/orderConstants";
 
@@ -111,6 +117,41 @@ export const payOrder =
   };
 
 
+  export const deliverOrder =
+  (order) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: ORDER_DELIVERED_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+        
+          Authorization: `${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/delivered`,
+        {},
+        config
+      );
+
+      dispatch({ type: ORDER_DELIVERED_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ORDER_DELIVERED_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+
 
 
 export const myOrders = () => async (dispatch, getState) => {
@@ -134,6 +175,39 @@ export const myOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: MY_ORDERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
+// Get all orders via Admin 
+
+export const allOrder = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ALLORDER_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `${userInfo.token}`,
+      },
+    };
+
+   
+    const {data} = await axios.get('/api/orders',config)
+    dispatch({ type:  ALLORDER_LIST_SUCCESS, payload: data });
+    
+  } catch (error) {
+    dispatch({
+      type:  ALLORDER_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
