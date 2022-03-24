@@ -1,11 +1,13 @@
 import React from "react";
 import { Navbar, Nav, Container, NavDropdown, NavItem } from "react-bootstrap";
-import { Link, Route } from "react-router-dom";
+import { Link, Route,  } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../actions/userActions";
+import SearchBox from "./SearchBox";
 
 
 const Header = () => {
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const dispatch = useDispatch();
@@ -25,10 +27,14 @@ const Header = () => {
           <Navbar.Brand as={Link} to="/">
             Eshop
           </Navbar.Brand>
+          
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Route render={({ history }) => <SearchBox  history={history} />} />
           <Navbar.Collapse id="basic-navbar-nav">
+        
             <Nav className="headerNav">
+          
               <Nav.Link as={Link} to="/cart">
                 <i className="fa-solid fa-cart-shopping"></i>Cart
               </Nav.Link>

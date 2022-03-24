@@ -30,6 +30,7 @@ const ProfileScreen = () => {
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
   const [message, setMessage] = useState(null);
+ 
 
   const userDetails = useSelector((state) => state.userDetails);
   const {loading,error,user} = userDetails;
@@ -46,6 +47,8 @@ const ProfileScreen = () => {
 
   const myyOrders = useSelector((state) => state.myyOrders);
   const {orders} = myyOrders;
+  console.log(myyOrders)
+  
 
 
   // const getUserData = async() => {
@@ -59,18 +62,6 @@ const ProfileScreen = () => {
   //   const data = await res.json();
   //   console.log(data)
   // }
-
- 
-
-
- 
-
-
-  
-
- 
-
- 
 
   useEffect(() => {
     if (!userInfo) {
@@ -88,11 +79,31 @@ const ProfileScreen = () => {
        
         
       }
-
-        
+//  axios.get(`localhost:5000/api/orders/myorders`,{
+  
+//     headers: {
+//       Authorization: `${userInfo.token}`,
+//     },
+  
+//  })
+      // .then((res) => {
+      //   console.log(`res`,res.data)
+      // })        
 
     }
   }, [dispatch,history,userInfo,user,success]);
+
+
+ 
+
+
+  
+
+ 
+
+ 
+
+  
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

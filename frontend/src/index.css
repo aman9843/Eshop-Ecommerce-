@@ -23,3 +23,15 @@ h2 {
     padding: 0.5rem;
 }
 
+.carousel img {
+    height: 300px;
+    margin: 40px;
+    padding: 30px;
+    border-radius: 50%;
+    
+
+}
+
+.carousel a {
+    margin: 0 auto;
+}

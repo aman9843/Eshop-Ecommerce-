@@ -16,73 +16,71 @@ import { detailsProducts, productReviews } from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import Message from "../Message";
-import { PRODUCT_REVIEWS_RESET } from "../../constants/productConstants";
+import { PRODUCT_REVIEWS_RESET} from "../../constants/productConstants";
+import Meta from "../Meta";
 
 // Product Screen
 
 const ProductScreen = () => {
+  const params = useParams();
+
+  const history = useHistory();
   const dispatch = useDispatch();
   const productsDetails = useSelector((state) => state.productsDetails);
   const { loading, error, products } = productsDetails;
   console.log(productsDetails);
+  const [qnt, setQnt] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const productsReviews = useSelector((state) => state.productsReviews);
-  const {loading: loadingReview, success: successReview, error: errorReview } = productsReviews;
+  const {
+    loading: loadingReview,
+    success: successReview,
+    error: errorReview,
+  } = productsReviews;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   // const date = new Date();
   // const today = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
 
-  const [qnt, setQnt] = useState(1);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
-
-  const params = useParams();
-
-  const history = useHistory();
-
   useEffect(() => {
-
-
-    if(successReview) {
-      
-      setRating(0)
-      setComment('')
-    
+    if (successReview) {
+      setRating(0);
+      setComment("");
     }
 
-    if(!products._id || products._id === params.id) {
-
+    if (!products._id || products._id === params.id) {
       dispatch(detailsProducts(params.id));
-      dispatch({type:PRODUCT_REVIEWS_RESET})
+      
+      dispatch({ type: PRODUCT_REVIEWS_RESET });
+    
 
     }
-    
-    
-  }, [dispatch, params, successReview]);
+  }, [dispatch, params, successReview,products._id]);
+
+
+  
 
 
   const addToCart = () => {
     history.push(`/cart/${params.id}?qnt:${qnt}`);
   };
 
-
-
   const onSubmitHandler = (e) => {
-    e.preventDefault()
-    dispatch(productReviews(params.id,{
-      rating,
-      comment
-    }))
-
-  }
-
-  
-
+    e.preventDefault();
+    dispatch(
+      productReviews(params.id, {
+        rating,
+        comment,
+      })
+    );
+  };
 
   return (
     <>
+      <Meta title={products.name} />
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>
@@ -184,13 +182,14 @@ const ProductScreen = () => {
                     <Rating value={review.rating} />
 
                     <p>{review.comment}</p>
-                   
                   </ListGroupItem>
                 ))}
 
                 <ListGroupItem>
                   <h2>Write a Customer Review</h2>
-                  { errorReview && <Message variant='danger'>{errorReview}</Message>}
+                  {errorReview && (
+                    <Message variant="danger">{errorReview}</Message>
+                  )}
                   {userInfo ? (
                     <Form onSubmit={onSubmitHandler}>
                       <Form.Group>
@@ -211,11 +210,19 @@ const ProductScreen = () => {
 
                       <Form.Group>
                         <Form.Label>Comment</Form.Label>
-                        <Form.Control as='textarea' row='3' value={comment} onChange={(e) => setComment(e.target.value)}></Form.Control>
+                        <Form.Control
+                          as="textarea"
+                          row="3"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
                       </Form.Group>
-                      <Button type="submit" variant="primary" disabled={loadingReview}>
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        disabled={loadingReview}
+                      >
                         Submit
-                        
                       </Button>
                     </Form>
                   ) : (

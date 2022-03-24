@@ -17,14 +17,12 @@ const SearchBox = () => {
    }
   return (
    <>
-   <Form onSubmit={onSubmitHandler}>
-       <Form.Control type='text'name='search' className='mr-sm-2 ml-sm-5'  placeholder='Search Products' onChange={(e) => setKeyword(e.target.value)}>
-
-       </Form.Control>
-       <Button type='submit' className='p-2' variant='outline-success'>
+   <Form onSubmit={onSubmitHandler} style={{display:'inline-flex'}}>
+       <Form.Control type='text' name='q' onChange={(e) => setKeyword(e.target.value)} className='mr-sm-2 ml-sm-5' placeholder='Search Products' ></Form.Control>
+       <Button type='submit' variant='outline-success' className='mx-2 py-2'>
            Submit
-
-       </Button>
+        </Button>
+     
    </Form>
    </>
   )

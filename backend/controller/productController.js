@@ -3,8 +3,20 @@ const asyncHandler = require("express-async-handler");
 
 // get Product
 const getProduct = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  const pageSize = 4;
+  const page = Number(req.query.pageNumber) || 1
+  const keyword = req.query.keyword ? {
+    name: {
+      $regex: req.query.keyword,
+      $options: 'i'
+    },
+  }
+
+  : {}
+
+  const count = await Product.count({...keyword})
+  const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize*(page-1));
+  res.json({products,page,pageSize,pages:Math.ceil(count/pageSize)});
 });
 
 // get Product By ID
@@ -123,5 +135,20 @@ const createProductReview = asyncHandler(async(req,res) => {
      
   }
 })
+
+
+// to get Top products on the basis of rating
+
+const getTopProduct = asyncHandler(async(req,res) => {
+
+
+  const product = await Product.find({}).sort({rating:-1}).limit(3)
+  res.json(product)
+  
+
+
+
+ 
+})
    
-module.exports = { getProduct, getProductById, deleteProductById, createProduct, updateProduct,createProductReview };
+module.exports = { getProduct, getProductById, deleteProductById, createProduct, updateProduct,createProductReview,getTopProduct};

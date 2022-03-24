@@ -57,6 +57,9 @@ const App = () => {
             <Route exact path="/admin/productlist">
               <ProductListScreen />
             </Route>
+            <Route exact path="/admin/productlist/:pageNumber">
+              <ProductListScreen />
+            </Route>
             <Route exact path="/admin/orderlist">
               <OrderListScreen />
             </Route>
@@ -69,7 +72,12 @@ const App = () => {
             <Route exact path="/search/:keyword">
               <HomeScreen/>
             </Route>
-            
+            <Route exact path="/page/:pageNumber">
+              <HomeScreen/>
+            </Route>
+            <Route exact path="/search/:keyword/page/:pageNumber">
+              <HomeScreen/>
+            </Route>
             
             
             <Route exact path="/order/:id">
