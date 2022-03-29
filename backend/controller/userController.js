@@ -131,6 +131,9 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
 // update user by id via admin
 const updateUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -142,13 +145,15 @@ const updateUserById = asyncHandler(async (req, res) => {
   
   }
 
-  const updateUser = await user.save();
+  const updatedUser = await user.save();
+  
 
   res.json({
-    _id: updateUser._id,
-    name: updateUser.name,
-    email: updateUser.email,
-    isAdmin: updateUser.isAdmin,
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    eamil:updatedUser.email,
+    isAdmin: updatedUser.isAdmin,
+    
   
   });
 });
