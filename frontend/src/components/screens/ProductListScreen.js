@@ -20,6 +20,7 @@ const ProductListScreen = () => {
 
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
+  console.log(products)
 
   const productsDelete = useSelector((state) => state.productsDelete);
   const {loading:loadingDelete, success:successDelete, error:errorDelete} = productsDelete;

@@ -1,5 +1,5 @@
 import React, {useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import Product from "../Product";
 import { useSelector, useDispatch } from "react-redux";
 import { listProducts } from "../../actions/productActions";
@@ -28,7 +28,8 @@ const HomeScreen = () => {
     <>
     <Meta/>
       {!keyword ? <ProductCarosul/> : <Link to='/' className="btn btn-light" > Go Back</Link>}
-      <h1>Latest Products</h1>
+      
+      <h1 style={{textAlign:"center"}}>Latest Products</h1>
      
       {loading ? (
         <Loader/>
@@ -42,9 +43,13 @@ const HomeScreen = () => {
               <Product product={product} />
             </Col>
           ))}
+     
         </Row>
-
-        <Paginate page={page} pages={pages} keyword={keyword ? keyword : ''}/>
+       
+         
+         <Paginate  page={page} pages={pages} keyword={keyword ? keyword : ''}/>
+        
+        
         </>
       )}
     </>

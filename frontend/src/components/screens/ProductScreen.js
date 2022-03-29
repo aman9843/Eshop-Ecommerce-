@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import Message from "../Message";
 import {
-  PRODUCT_DETAILS_RESET,
+
   PRODUCT_REVIEWS_RESET,
 } from "../../constants/productConstants";
 import Meta from "../Meta";
@@ -79,7 +79,7 @@ const ProductScreen = () => {
   return (
     <>
       <Meta title={products.name} />
-      <Link className="btn btn-light my-3" to="/">
+      <Link className="btn btn-light" to="/">
         Go Back
       </Link>
 
@@ -162,6 +162,7 @@ const ProductScreen = () => {
                     >
                       Add To Cart
                     </Button>
+                  
                   </ListGroupItem>
                 </ListGroup>
               </Card>

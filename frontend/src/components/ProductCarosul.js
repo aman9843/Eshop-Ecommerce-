@@ -6,6 +6,7 @@ import { topProduct } from "../actions/productActions";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const ProductCarosul = () => {
   const dispatch = useDispatch();
 
@@ -22,16 +23,21 @@ const ProductCarosul = () => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel pause='hover' className="bg-dark"> 
+    <Carousel pause='hover' className="bg-primary"> 
        {products.map(product => (
 
            <Carousel.Item key={product._id}>
                <Link to={`/products/${product._id}`}>
 
                <Image src={product.image} alt={product.name}></Image>
+               <Image className= "img2" src={product.image} alt={product.name}></Image>
+               
                <Carousel.Caption className="carousel-caption">
+                 
+               <Image className="logo" src="../../images/logo.png" alt="logo"></Image>
 
-                   <h2>{product.name} ${product.price}</h2>
+
+                   <h2 className="ch">{product.name} ${product.price}</h2>
 
                </Carousel.Caption>
 
@@ -39,6 +45,9 @@ const ProductCarosul = () => {
                </Link>
 
            </Carousel.Item>
+           
+            
+           
 
        ))}
     </Carousel>
