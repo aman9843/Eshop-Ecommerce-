@@ -16,7 +16,10 @@ import { detailsProducts, productReviews } from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import Message from "../Message";
-import { PRODUCT_REVIEWS_RESET} from "../../constants/productConstants";
+import {
+  PRODUCT_DETAILS_RESET,
+  PRODUCT_REVIEWS_RESET,
+} from "../../constants/productConstants";
 import Meta from "../Meta";
 
 // Product Screen
@@ -42,8 +45,9 @@ const ProductScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  // const date = new Date();
-  // const today = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+
+  const date = new Date();
+  console.log(date);
 
   useEffect(() => {
     if (successReview) {
@@ -51,18 +55,12 @@ const ProductScreen = () => {
       setComment("");
     }
 
-    if (!products._id || products._id === params.id) {
+    if (!products._id || products._id !== params.id) {
       dispatch(detailsProducts(params.id));
-      
+
       dispatch({ type: PRODUCT_REVIEWS_RESET });
-    
-
     }
-  }, [dispatch, params, successReview,products._id]);
-
-
-  
-
+  }, [dispatch, params, successReview, products._id]);
 
   const addToCart = () => {
     history.push(`/cart/${params.id}?qnt:${qnt}`);

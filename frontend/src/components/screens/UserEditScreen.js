@@ -15,13 +15,14 @@ import { USER_ADMIN_UPDATE_RESET } from "../../constants/userConstants";
 const UserEditScreen = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const history = useHistory();
  
   
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setAdmin] = useState("");
-  const history = useHistory();
+  
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
@@ -50,7 +51,7 @@ const UserEditScreen = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(userUpdateDetails({ _id: params.id,name,email,isAdmin }));
+    dispatch(userUpdateDetails({ _id: params,name,email,isAdmin }));
   };
 
   return (

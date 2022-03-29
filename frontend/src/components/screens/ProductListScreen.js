@@ -18,9 +18,6 @@ const ProductListScreen = () => {
 
   const history = useHistory();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
 
@@ -29,6 +26,11 @@ const ProductListScreen = () => {
 
   const productsCreate = useSelector((state) => state.productsCreate);
   const {loading:loadingCreate, success:successCreate, error:errorCreate, product:createdProduct} = productsCreate;
+
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  
 
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const ProductListScreen = () => {
     if(successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts(''));
     }
   }, [dispatch, history, userInfo,successDelete,successCreate,createdProduct]);
 

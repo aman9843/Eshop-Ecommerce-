@@ -19,7 +19,7 @@ const CartScreen = () => {
   const params = useParams();
   const history = useHistory();
   const location = useLocation();
-  const productId = params.id;
+ 
   // location. search for storing quantity in qty
   // substring to pass as an Integer 
   const qty = parseInt(
@@ -37,10 +37,10 @@ const CartScreen = () => {
   const { cartItems } = cart;
   // useEffect to add product with the ID
   useEffect(() => {
-    if (productId) {
-      dispatch(addItem(productId, qty));
+    if (params.id) {
+      dispatch(addItem(params.id, qty));
     }
-  }, [dispatch, productId, qty]);
+  }, [dispatch, params, qty]);
   // use Effect to remove Item 
   const removeFromCart = (id) => {
     dispatch(rmvItem(id));

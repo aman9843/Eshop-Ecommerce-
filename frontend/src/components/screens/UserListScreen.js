@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Button, Container, Table } from "react-bootstrap";
+import { useHistory,Link} from "react-router-dom";
+import { Button,Table,Container} from "react-bootstrap";
 import Loader from "../Loader";
 import Message from "../Message";
 import { userList } from "../../actions/userActions";
@@ -75,12 +75,13 @@ const UserListScreen = () => {
 
                
                 <td>
-                  <Container as={Link} to={`/admin/user/${user._id}/edit`}>
+                
+
+                  {user.isAdmin ? (<Container as={Link} to={`/admin/user/${user._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas  fa-eye"></i>
                     </Button>
-                  </Container>
-                  <Button
+                  </Container> ): ( <Button
                     variant="danger"
                     className="btn-sm"
                     onClick={() => {
@@ -88,7 +89,8 @@ const UserListScreen = () => {
                     }}
                   >
                     <i className="fas fa-trash"></i>
-                  </Button>
+                  </Button>)}
+                 
                 </td>
               </tr>
             ))}

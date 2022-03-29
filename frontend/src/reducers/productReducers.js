@@ -23,6 +23,7 @@ import {
   PRODUCT_TOP_PRODUCTS_REQUEST,
   PRODUCT_TOP_PRODUCTS_SUCCESS,
   PRODUCT_TOP_PRODUCTS_FAIL,
+  PRODUCT_DETAILS_RESET,
 
 } from "../constants/productConstants";
 
@@ -57,6 +58,8 @@ export const productDetailsReducers = (state = { products: {reviews: []} }, acti
       return { loading: false, products: action.payload };
     case PRODUCT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+      case PRODUCT_DETAILS_RESET:
+        return{products:{reviews:[]}}
    
 
     default:
@@ -92,7 +95,7 @@ export const productCreateReducers = (state = {}, action) => {
     case PRODUCT_CREATE_REQUEST:
       return {loading: true};
     case PRODUCT_CREATE_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, success:true, product: action.payload };
     case PRODUCT_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case PRODUCT_CREATE_RESET:

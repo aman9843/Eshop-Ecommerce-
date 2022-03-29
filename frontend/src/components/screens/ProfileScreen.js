@@ -34,11 +34,12 @@ const ProfileScreen = () => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const {loading,error,user} = userDetails;
+  console.log(userDetails)
   
-  
-
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  
+
 
 
   const userUpdate = useSelector((state) => state.userUpdate);
@@ -46,49 +47,30 @@ const ProfileScreen = () => {
   
 
   const myyOrders = useSelector((state) => state.myyOrders);
-  const {orders} = myyOrders;
+  const {loading:loadingOrders, orders, error:errorOrders} = myyOrders;
   console.log(myyOrders)
   
 
 
-  // const getUserData = async() => {
-  //   const res = await fetch('/myorders', {
-  //     method:"Get",
-  //     headers: {
-  //       Authorization: `${userInfo.token}`,
-  //     },
-  //   })
-
-  //   const data = await res.json();
-  //   console.log(data)
-  // }
+ 
 
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
     } else {
 
-      if(!userInfo || !userInfo.name) {
+      if(!user || !user.name || success) {
         dispatch({type : USER_UPDATE_RESET})
          dispatch(details('profile'))
         dispatch(myOrders())
       } else {
  
-        setName(userInfo.name)
-        setEmail(userInfo.email)
+        setName(user.name)
+        setEmail(user.email)
        
         
       }
-//  axios.get(`localhost:5000/api/orders/myorders`,{
-  
-//     headers: {
-//       Authorization: `${userInfo.token}`,
-//     },
-  
-//  })
-      // .then((res) => {
-      //   console.log(`res`,res.data)
-      // })        
+     
 
     }
   }, [dispatch,history,userInfo,user,success]);
@@ -110,7 +92,7 @@ const ProfileScreen = () => {
     if(password !== cpassword) {
         setMessage("Password Do Not Match!")
     } else {
-       dispatch(updateDetails({id : userInfo._id ,email,name,password,cpassword}))
+       dispatch(updateDetails({id : user._id ,email,name,password,cpassword}))
     }
     
 }
@@ -122,9 +104,12 @@ const ProfileScreen = () => {
       <Col md={3}>
       <h2>User Profile</h2>
       {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
       {success && <Message variant='success'>Profile Updated</Message>}
-      {loading && <Loader />}
+      {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : (
       <Form onSubmit={onSubmitHandler}>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
@@ -185,10 +170,11 @@ const ProfileScreen = () => {
        Update
       </Button>
       </Form>
+        )}
       </Col>
       <Col md={9}>
           <h2>My Orders</h2>
-          {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
+          {loadingOrders ? <Loader/> : errorOrders ? <Message variant='danger'>{errorOrders}</Message> : (
 
             <Table striped bordered responsive hover className="table-sm">
               <thead>

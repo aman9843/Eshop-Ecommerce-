@@ -1,18 +1,14 @@
 import React from "react";
 import { Pagination, Container} from "react-bootstrap";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Paginate = ({isAdmin = false, keyword = "" }) => {
+const Paginate = ({isAdmin = false, keyword = "",page,pages }) => {
 
-    const productList = useSelector((state) => state.productList);
-    const { page,pages } = productList;
-    console.log(page)
-    console.log(pages)
+
   return (
      pages > 1 && (
     <Pagination>
-      {[...Array(pages).keys()].map((x) => (
+      {[...Object(pages).key()].map((x) => (
         <Link
           as={Container}
           key={x + 1}

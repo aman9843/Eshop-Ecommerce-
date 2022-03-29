@@ -24,9 +24,8 @@ import {
   USER_DELETE_FAIL,
   USER_ADMIN_UPDATE_REQUEST,
   USER_ADMIN_UPDATE_SUCCESS,
-  USER_ADMIN_UPDATE_FAIL
+  USER_ADMIN_UPDATE_FAIL,
 } from "../constants/userConstants";
-
 
 // Login Action
 
@@ -75,7 +74,6 @@ export const logOut = () => async (dispatch) => {
   });
 };
 
-
 // Register Action
 export const register =
   (name, email, password, cpassword) => async (dispatch) => {
@@ -108,12 +106,12 @@ export const register =
     }
   };
 
-
-// User Details Action 
+// User Details Action
 
 export const details = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
+
     const {
       userLogin: { userInfo },
     } = getState();
@@ -124,13 +122,12 @@ export const details = (id) => async (dispatch, getState) => {
       },
     };
 
-    console.log(config);
-
     const { data } = await axios.get(`/api/users/${id}`, config);
-    console.log(data)
-      
+    
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+
+
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
@@ -142,7 +139,7 @@ export const details = (id) => async (dispatch, getState) => {
   }
 };
 
-// User Update Details 
+// User Update Details
 
 export const updateDetails = (user) => async (dispatch, getState) => {
   try {
@@ -153,6 +150,7 @@ export const updateDetails = (user) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `${userInfo.token}`,
       },
     };
@@ -175,8 +173,6 @@ export const updateDetails = (user) => async (dispatch, getState) => {
   }
 };
 
-
-
 // User List Actions
 
 export const userList = () => async (dispatch, getState) => {
@@ -194,10 +190,9 @@ export const userList = () => async (dispatch, getState) => {
 
     console.log(config);
 
-    const { data } = await axios.get(`/api/users/register`,config);
+    const { data } = await axios.get(`/api/users/register`, config);
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
-
   } catch (error) {
     dispatch({
       type: USER_LIST_FAIL,
@@ -208,7 +203,6 @@ export const userList = () => async (dispatch, getState) => {
     });
   }
 };
-
 
 // User DELETE ACTIONS
 
@@ -227,11 +221,10 @@ export const userDelete = (id) => async (dispatch, getState) => {
 
     console.log(config);
 
-    const { data } = await axios.delete(`/api/users/${id}`,config);
-    console.log(data)
+    const { data } = await axios.delete(`/api/users/${id}`, config);
+    console.log(data);
 
-    dispatch({ type: USER_DELETE_SUCCESS});
-
+    dispatch({ type: USER_DELETE_SUCCESS });
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
@@ -243,10 +236,7 @@ export const userDelete = (id) => async (dispatch, getState) => {
   }
 };
 
-
-
-
-// user authorization update by admin 
+// user authorization update by admin
 
 export const userUpdateDetails = (user) => async (dispatch, getState) => {
   try {
@@ -257,19 +247,16 @@ export const userUpdateDetails = (user) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
         Authorization: `${userInfo.token}`,
       },
     };
 
-   
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+    console.log(data);
 
-    const { data } = await axios.put(`/api/users/${user._id}`,user, config);
-    console.log(data)
-
-    dispatch({ type: USER_ADMIN_UPDATE_SUCCESS});
-    dispatch({ type: USER_DETAILS_SUCCESS, payload:data});
-
+    dispatch({ type: USER_ADMIN_UPDATE_SUCCESS });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: USER_ADMIN_UPDATE_FAIL,
