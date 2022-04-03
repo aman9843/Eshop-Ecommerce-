@@ -20,8 +20,9 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
+        
           <Image className="homeLogo" src="../../images/logo.png" alt="logo"></Image>
-         
+        
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

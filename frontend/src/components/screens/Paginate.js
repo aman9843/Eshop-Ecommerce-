@@ -25,7 +25,7 @@ const Paginate = ({ isAdmin = false, keyword = "", page, pages }) => {
                       : `/admin/productlist/${x + 1}`
                   }
                 >
-                  <Button  variant="outline-dark" className="rounded-circle  pb">
+                  <Button  variant="outline-dark" className="rounded-circle  pb ">
                     {x + 1}
                   </Button>
                 </Link>

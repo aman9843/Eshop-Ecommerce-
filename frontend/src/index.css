@@ -23,43 +23,45 @@ h2 {
 
 .carousel img {
   height: 400px;
-  clip-path: circle(80.0% at 15% 50%);
-
- 
+  clip-path: circle(80% at 15% 50%);
 }
 
 .img2 {
-    margin-left: 998px;
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+  position: absolute;
+  right: 0px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  right: 0px;
 }
 
 .carousel a {
   margin: 0 auto;
- 
-  
 }
 .che {
-    color: white;
-    margin-bottom: 150px;
+  color: white;
+  margin-bottom: 150px;
 }
 
 .ch {
-color: white;
+  color: white;
+  text-align: center;
 }
 
-.logo {
-   margin-bottom: -80px;
-         
+.homeLogo {
+  height: 50px;
 }
-.homeLogo  {
-    height: 60px;
-    width: 80px;
-   
-}
-
-
 
 .pb :focus {
   background-color: black;
+}
+
+ul.pagination {
+  justify-content: center;
+}
+
+.logo {
+  
+   position: absolute;
+   left:320px;
+   bottom: 0px;
 }

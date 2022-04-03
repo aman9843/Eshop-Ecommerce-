@@ -25,12 +25,19 @@ const App = () => {
       <Router>
         <Header />
         <main className="py-2">
-         
-            <Row>
-              <Switch>
-                <Route exact path="/">
+        <Route exact path="/">
                   <HomeScreen />
                 </Route>
+                <Route exact path="/search/:keyword">
+                  <HomeScreen />
+                </Route>
+                <Route exact path="/page/:pageNumber">
+                  <HomeScreen />
+                </Route>
+           <Container>
+            <Row>
+              <Switch>
+               
                <Container>
                 <Route exact path="/login">
                   <LoginScreen />
@@ -68,12 +75,7 @@ const App = () => {
                 <Route exact path="/admin/product/:id/edit">
                   <ProductEditScreen />
                 </Route>
-                <Route exact path="/search/:keyword">
-                  <HomeScreen />
-                </Route>
-                <Route exact path="/page/:pageNumber">
-                  <HomeScreen />
-                </Route>
+               
                 <Route exact path="/search/:keyword/page/:pageNumber">
                   <HomeScreen />
                 </Route>
@@ -93,6 +95,7 @@ const App = () => {
                
               </Switch>
             </Row>
+            </Container>
         
         </main>
         <Footer />
