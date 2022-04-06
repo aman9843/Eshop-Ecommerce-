@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 // get Product
 const getProduct = asyncHandler(async (req, res) => {
-  const pageSize = 4;
+  const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword ? {
     name: {
