@@ -81,6 +81,17 @@ const LoginScreen = () => {
       </Button>
       </Form>
 
+      <Row className="py-3">
+        <Col>
+          Forgot Password ?{" "}
+          <Link
+            to='/forgotpassword'
+          >
+              Reset 
+          </Link>
+        </Col>
+      </Row>
+
 
       <Row className="py-3">
         <Col>

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {authUser,getUser,registerNewUser,updateUser, getUsers,deleteUser,getUserById,updateUserById} = require('../controller/userController')
+const {authUser,getUser,registerNewUser,updateUser, getUsers,deleteUser,getUserById,updateUserById, forgotPassword, resetPassword} = require('../controller/userController')
 const {protect,admin} = require('../middleware/authMiddleware')
 
 
@@ -12,9 +12,22 @@ router.route('/register').post(registerNewUser).get(protect,admin,getUsers)
 router.post('/login', authUser)
 
 
+// router to post forget Password 
+router.post('/forgotpassword', forgotPassword)
+
+//router to reset password
+
+router.patch('/resetpassword/:token',resetPassword)
+
+
 //router Get User Data
 router.route('/profile').get(protect,getUser).put(protect,updateUser)
 // router to get user data
+
+
+
+
+
 
 
 

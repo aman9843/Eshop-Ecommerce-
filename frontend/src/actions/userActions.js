@@ -25,6 +25,12 @@ import {
   USER_ADMIN_UPDATE_REQUEST,
   USER_ADMIN_UPDATE_SUCCESS,
   USER_ADMIN_UPDATE_FAIL,
+  USER_FORGET_PASSWORD_REQUEST,
+  USER_FORGET_PASSWORD_SUCCESS,
+  USER_FORGET_PASSWORD_FAIL,
+  USER_RESET_PASSWORD_REQUEST,
+  USER_RESET_PASSWORD_SUCCESS,
+  USER_RESET_PASSWORD_FAIL
 } from "../constants/userConstants";
 
 // Login Action
@@ -105,6 +111,74 @@ export const register =
       });
     }
   };
+
+
+// Forgot Password Actions 
+export const forgetPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_FORGET_PASSWORD_REQUEST});
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      "/api/users/forgotpassword",
+      {email},
+      config
+    );
+
+    dispatch({ type: USER_FORGET_PASSWORD_SUCCESS, payload: data.message});
+    
+  } catch (error) {
+    dispatch({
+      type: USER_FORGET_PASSWORD_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+// Reset Password Actions
+
+
+export const resetPassword = (token,password) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_RESET_PASSWORD_REQUEST});
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/users/resetpassword/${token}`,
+      {password},
+      config
+      
+    );
+
+    dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data.success});
+    
+  } catch (error) {
+    dispatch({
+      type: USER_RESET_PASSWORD_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
 
 // User Details Action
 

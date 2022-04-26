@@ -18,6 +18,8 @@ import UserEditScreen from "./components/screens/UserEditScreen";
 import ProductListScreen from "./components/screens/ProductListScreen";
 import ProductEditScreen from "./components/screens/ProductEditScreen";
 import OrderListScreen from "./components/screens/OrderListScreen";
+import ForgetPassword from "./components/screens/ForgetPassword";
+import ResetPassword from "./components/screens/ResetPassword";
 
 const App = () => {
   return (
@@ -75,10 +77,18 @@ const App = () => {
                 <Route exact path="/admin/product/:id/edit">
                   <ProductEditScreen />
                 </Route>
+                <Route exact path="/forgotpassword">
+                  <ForgetPassword />
+                </Route>
+                <Route exact path="/resetpassword/:token">
+                  <ResetPassword />
+                </Route>
                
                 <Route exact path="/search/:keyword/page/:pageNumber">
                   <HomeScreen />
                 </Route>
+
+
 
                 <Route exact path="/order/:id">
                   <OrderScreen />

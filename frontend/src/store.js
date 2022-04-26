@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'  //middleware
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { productDetailsReducers, productReducers,productDeleteReducers,productCreateReducers, productUpdateReducers,productReviewReducers, TopProductReducers} from './reducers/productReducers'
 import { cartReducers } from './reducers/cartReducers'
-import { userLoginReducers, userRegisterReducers, userDetailsReducers, userUpdateReducers, userListReducers, userDeleteReducers,userAdminUpdateUser } from './reducers/userReducers'
+import { userLoginReducers, userRegisterReducers, userDetailsReducers, userUpdateReducers, userListReducers, userDeleteReducers,userForgetPassword,userResetPassword, userAdminUpdateUser } from './reducers/userReducers'
 import { OrderDetailsReducers, OrderCreateReducers, OrderPayReducers, myOrdersReducers, AllOrdersReducers, OrderDeliveredReducers} from './reducers/orderReducers'
 //Reducers
 const reducer = combineReducers({
@@ -27,7 +27,9 @@ const reducer = combineReducers({
     allOrders:AllOrdersReducers,
     usersList:userListReducers,
     usersDelete:userDeleteReducers,
-    usersAdminUpdate:userAdminUpdateUser
+    usersAdminUpdate:userAdminUpdateUser,
+    forgetPasswords:userForgetPassword,
+    resetPasswords:userResetPassword
     
 })
 // Get Item
