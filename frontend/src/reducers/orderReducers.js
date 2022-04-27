@@ -2,6 +2,7 @@ import {
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
+  ORDER_LIST_RESET,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -30,7 +31,8 @@ export const OrderCreateReducers = (state = {}, action) => {
       return { loading: false, success: true, order: action.payload };
     case ORDER_LIST_FAIL:
       return { loading: false, error: action.payload };
-
+    case ORDER_LIST_RESET:
+      return{};
     default:
       return state;
   }

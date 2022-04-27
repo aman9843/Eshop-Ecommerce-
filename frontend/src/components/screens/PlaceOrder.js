@@ -14,6 +14,8 @@ import Message from "../Message";
 import {orderList} from '../../actions/orderActions'
 import CheckOut from "../CheckOut";
 import { useHistory } from "react-router-dom";
+import { USER_DETAILS_RESET } from "../../constants/userConstants";
+import { ORDER_LIST_RESET } from "../../constants/orderConstants";
 
 const PlaceOrder = () => {
 const dispatch = useDispatch();
@@ -68,6 +70,8 @@ const history = useHistory();
 useEffect(() => {
   if(success) {
     history.push(`/order/${order._id}`)
+    dispatch({type:USER_DETAILS_RESET})
+    dispatch({type:ORDER_LIST_RESET})
   }
 
    //eslint-disable-next-line

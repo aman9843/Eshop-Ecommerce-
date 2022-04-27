@@ -9,9 +9,9 @@ import { listProducts } from "../../actions/productActions";
 import { productDelete } from "../../actions/productActions";
 
 import { useDispatch, useSelector } from "react-redux";
-import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
 import { productCreate } from "../../actions/productActions";
-
+import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
+import Paginate from "./Paginate";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const ProductListScreen = () => {
   const history = useHistory();
 
   const productList = useSelector((state) => state.productList);
-  const { products, loading, error} = productList;
+  const { products, loading, error,page,pages} = productList;
   console.log(productList)
 
   const productsDelete = useSelector((state) => state.productsDelete);
@@ -27,6 +27,8 @@ const ProductListScreen = () => {
 
   const productsCreate = useSelector((state) => state.productsCreate);
   const {loading:loadingCreate, success:successCreate, error:errorCreate, product:createdProduct} = productsCreate;
+
+
 
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -46,7 +48,7 @@ const ProductListScreen = () => {
     if(successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts(''));
+      dispatch(listProducts('',));
     }
   }, [dispatch, history, userInfo,successDelete,successCreate,createdProduct]);
 
@@ -121,6 +123,8 @@ const ProductListScreen = () => {
           </tbody>
         </Table>
       )}
+        <Paginate  page={page} pages={pages}/>
+        
     </>
   );
 };

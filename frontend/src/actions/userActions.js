@@ -200,6 +200,7 @@ export const details = (id) => async (dispatch, getState) => {
     
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: USER_DETAILS_RESET })
 
 
   } catch (error) {

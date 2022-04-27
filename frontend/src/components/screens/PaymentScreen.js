@@ -16,7 +16,10 @@ const PaymentScreen = () => {
   console.log(cart);
 
   if (!shippingAddress) {
-    history.push("/shipping");
+    if(!shippingAddress.address) {
+      history.push("/shipping");
+    }
+   
   }
 
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
