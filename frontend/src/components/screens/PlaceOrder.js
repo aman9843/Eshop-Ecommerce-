@@ -72,6 +72,7 @@ useEffect(() => {
     history.push(`/order/${order._id}`)
     dispatch({type:USER_DETAILS_RESET})
     dispatch({type:ORDER_LIST_RESET})
+    
   }
 
    //eslint-disable-next-line

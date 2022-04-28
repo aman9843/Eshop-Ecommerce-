@@ -21,6 +21,7 @@ const LoginScreen = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validated, setValidated] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, userInfo, error } = userLogin;
 
@@ -39,13 +40,20 @@ const LoginScreen = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
     dispatch(login(email,password))
 }
 
 
 
   return (
-    <FormContainer>
+    <FormContainer  noValidate validated={validated}>
       <h1>Sign In</h1>
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
@@ -53,6 +61,8 @@ const LoginScreen = () => {
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
+            required
+            hasValidation
             type="email"
             placeholder="email"
             value={email}
@@ -67,6 +77,7 @@ const LoginScreen = () => {
         <Form.Group controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
+          required
             type="password"
             placeholder="password"
             value={password}

@@ -15,6 +15,7 @@ import { addItem } from "../../actions/cartActions";
 import { rmvItem } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const CartScreen = () => {
   const params = useParams();
   const history = useHistory();
@@ -39,8 +40,9 @@ const CartScreen = () => {
   useEffect(() => {
     if (params.id) {
       dispatch(addItem(params.id, qty));
+     
     }
-  }, [dispatch, params, qty]);
+  }, [dispatch, params.id, qty]);
   // use Effect to remove Item 
   const removeFromCart = (id) => {
     dispatch(rmvItem(id));

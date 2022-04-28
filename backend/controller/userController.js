@@ -194,13 +194,13 @@ const resetPassword = asyncHandler(async (req, res, next) => {
     );
   }
 
-  if (req.body.password !== req.body.cpassword) {
-    res.status(404);
-    throw new Error("Password do not match");
-  }
+  // if (req.body.password !== req.body.cpassword) {
+  //   res.status(404);
+  //   throw new Error("Password do not match");
+  // }
 
     user.password = req.body.password;
-    user.cpassword = req.body.cpassword;
+    // user.cpassword = req.body.cpassword;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 

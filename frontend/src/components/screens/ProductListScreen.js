@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, useParams } from "react-router-dom";
 import { Button, Container, Table } from "react-bootstrap";
 import Loader from "../Loader";
 import Message from "../Message";
@@ -14,6 +14,9 @@ import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
 import Paginate from "./Paginate";
 
 const ProductListScreen = () => {
+  const params = useParams();
+  const pageNumber = params.pageNumber || 1
+  console.log(pageNumber)
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -48,9 +51,9 @@ const ProductListScreen = () => {
     if(successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts('',));
+      dispatch(listProducts('',pageNumber));
     }
-  }, [dispatch, history, userInfo,successDelete,successCreate,createdProduct]);
+  }, [dispatch, history, userInfo,successDelete,successCreate,createdProduct,pageNumber]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are You Sure")) {
@@ -91,6 +94,7 @@ const ProductListScreen = () => {
               <th>PRICE</th>
               <th>CATEGORY</th>
               <th>BRAND</th>
+             
             </tr>
           </thead>
           <tbody>
@@ -123,7 +127,7 @@ const ProductListScreen = () => {
           </tbody>
         </Table>
       )}
-        <Paginate  page={page} pages={pages}/>
+        <Paginate  page={page} pages={pages} isAdmin={true}/>
         
     </>
   );

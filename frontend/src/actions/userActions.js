@@ -157,7 +157,7 @@ export const resetPassword = (token,password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(
+    const { data } = await axios.patch(
       `/api/users/resetpassword/${token}`,
       {password},
       config
@@ -200,7 +200,7 @@ export const details = (id) => async (dispatch, getState) => {
     
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
-    dispatch({ type: USER_DETAILS_RESET })
+   
 
 
   } catch (error) {

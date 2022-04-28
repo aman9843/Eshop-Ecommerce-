@@ -28,6 +28,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
   const [message, setMessage] = useState(null);
+  const [validated, setValidated] = useState(false);
 
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, userInfo, error } = userRegister;
@@ -48,6 +49,15 @@ const RegisterScreen = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+
+
     if(password !== cpassword) {
         setMessage("Password Do Not Match!")
     } else {
@@ -59,7 +69,7 @@ const RegisterScreen = () => {
 
 
   return (
-    <FormContainer>
+    <FormContainer noValidate validated={validated}>
       <h1>Register YourSelf</h1>
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
@@ -69,12 +79,19 @@ const RegisterScreen = () => {
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
+            required
             placeholder="Name"
             value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
-          ></Form.Control>
+          >
+            
+          </Form.Control>
+          {/* <Form.Control.Feedback type="invalid">
+              Please choose a username.
+            </Form.Control.Feedback>
+           */}
         </Form.Group>
      
     
@@ -82,6 +99,8 @@ const RegisterScreen = () => {
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
+            hasValidation
+            required
             placeholder="email"
             value={email}
             onChange={(e) => {
@@ -96,6 +115,7 @@ const RegisterScreen = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
+            required
             placeholder="password"
             value={password}
             onChange={(e) => {
@@ -112,6 +132,7 @@ const RegisterScreen = () => {
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="cpassword"
+            required
             placeholder="Confirm password"
             value={cpassword}
             onChange={(e) => {

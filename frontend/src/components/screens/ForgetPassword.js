@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import {useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
 import {
 
   Button,
@@ -19,6 +20,9 @@ const ForgetPassword = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [email, setEmail] = useState("");
+  const [validated, setValidated] = useState(false);
+  const Swal = require('sweetalert2')
+
 
   const forgetPasswords = useSelector((state) => state.forgetPasswords);
   const { loading, message, error } = forgetPasswords;
@@ -35,6 +39,13 @@ const ForgetPassword = () => {
 
 const onSubmitHandler = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    setValidated(true);
     dispatch(forgetPassword(email))
 
     dispatch({ type: USER_FORGET_PASSWORD_RESET });
@@ -43,8 +54,10 @@ const onSubmitHandler = (e) => {
   useEffect(() => {
 
     if (message) {
+      
       history.push('/resetpassword')
       alert(message)
+     
       
     }
   }, [dispatch,history,message]);
@@ -57,7 +70,7 @@ const onSubmitHandler = (e) => {
 
 
   return (
-    <FormContainer>
+    <FormContainer  noValidate validated={validated}>
       <h1>Forgot Password</h1>
       {error && <Message variant='danger'>{error}</Message>}
      
@@ -67,6 +80,8 @@ const onSubmitHandler = (e) => {
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
+            required
+            hasValidation
             type="email"
             placeholder="email"
             value={email}
