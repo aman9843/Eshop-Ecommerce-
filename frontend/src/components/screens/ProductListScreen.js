@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { productCreate } from "../../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../../constants/productConstants";
 import Paginate from "./Paginate";
+import Swal from 'sweetalert2'
 
 const ProductListScreen = () => {
   const params = useParams();
@@ -55,15 +56,28 @@ const ProductListScreen = () => {
     }
   }, [dispatch, history, userInfo,successDelete,successCreate,createdProduct,pageNumber]);
 
+ 
   const deleteHandler = (id) => {
-    if (window.confirm("Are You Sure")) {
-      dispatch(productDelete(id))
-    }
+    Swal.fire({
+      title: 'Do you want to Delete The Product?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Deleted!', '', 'success')
+        dispatch(productDelete(id))
+      } else if (result.isDenied) {
+        Swal.fire('Not Deleted', '', 'info')
+      }
+    })
   };
 
+
   const createProductsHandler = () => {
-      dispatch(productCreate())
-  };
+    dispatch(productCreate())
+  }
 
   return (
     <>

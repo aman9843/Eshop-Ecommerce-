@@ -21,6 +21,7 @@ import {
   ORDER_DELIVERED_SUCCESS,
   ORDER_DELIVERED_FAIL,
   ORDER_DELIVERED_RESET,
+  ORDER_DETAILS_RESET,
 } from "../constants/orderConstants";
 
 export const OrderCreateReducers = (state = {}, action) => {
@@ -52,6 +53,8 @@ export const OrderDetailsReducers = (
       return { loading: false, order: action.payload };
     case ORDER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case ORDER_DETAILS_RESET:
+      return {}
 
     default:
       return state;

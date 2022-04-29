@@ -21,7 +21,6 @@ const ForgetPassword = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [validated, setValidated] = useState(false);
-  const Swal = require('sweetalert2')
 
 
   const forgetPasswords = useSelector((state) => state.forgetPasswords);
@@ -56,7 +55,11 @@ const onSubmitHandler = (e) => {
     if (message) {
       
       history.push('/resetpassword')
-      alert(message)
+      Swal.fire(
+        "Your Password Change Request Has Been Processed",
+        "Check Your Mail....",
+        "success"
+      );
      
       
     }

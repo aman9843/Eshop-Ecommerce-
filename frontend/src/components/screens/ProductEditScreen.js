@@ -54,7 +54,7 @@ const ProductEditScreen = () => {
         setCategory(products.category);
       }
     }
-  }, [dispatch, products, params, history, successUpdate]);
+  }, [dispatch, products, params.id, history, successUpdate]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];

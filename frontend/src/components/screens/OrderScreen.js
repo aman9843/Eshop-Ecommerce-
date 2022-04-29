@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "../Loader";
 import Message from "../Message";
 import { PayPalButton } from "react-paypal-button-v2";
-import { ORDER_PAY_RESET, ORDER_DELIVERED_RESET } from "../../constants/orderConstants";
+import { ORDER_PAY_RESET, ORDER_DELIVERED_RESET} from "../../constants/orderConstants";
 
 import {
   Row,
@@ -30,6 +30,7 @@ const OrderScreen = () => {
   
   const ordersDetails = useSelector((state) => state.ordersDetails);
   const { order, loading, error } = ordersDetails;
+  console.log(order)
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -72,9 +73,12 @@ const OrderScreen = () => {
 
       document.body.appendChild(script);
     };
-    if (!order || successPay || successDelivered) {
+    if (!order || successPay || successDelivered  || order._id !== orderId) {
+      
       dispatch({ type: ORDER_PAY_RESET });
       dispatch({type: ORDER_DELIVERED_RESET})
+   
+
       dispatch(orderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
