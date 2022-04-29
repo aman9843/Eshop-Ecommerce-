@@ -59,24 +59,29 @@ const ProductListScreen = () => {
  
   const deleteHandler = (id) => {
     Swal.fire({
-      title: 'Do you want to Delete The Product?',
-      showDenyButton: true,
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Save',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire('Deleted!', '', 'success')
-        dispatch(productDelete(id))
-      } else if (result.isDenied) {
-        Swal.fire('Not Deleted', '', 'info')
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
       }
+      dispatch(productDelete(id))
     })
   };
 
 
   const createProductsHandler = () => {
     dispatch(productCreate())
+   
   }
 
   return (
